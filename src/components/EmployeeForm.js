@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { View, Picker, Text } from 'react-native';
-import { connect } from 'react-redux';
-import { employeeUpdate } from '../actions';
 
 import { CardSection, Input } from './common';
 
@@ -57,9 +55,4 @@ const styles = {
 	}
 };
 
-const mapStateToProp = ({ employeeForm }) => {
-	const { name, phone, shift } = employeeForm;
-	return { name, phone, shift };
-};
-
-export default connect(mapStateToProp, { employeeUpdate })(EmployeeForm);
+export default EmployeeForm;

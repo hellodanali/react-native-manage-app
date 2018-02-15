@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { employeeUpdate, employeeCreate } from '../actions';
 import { Card, CardSection, Button } from './common';
-import EmployeeForm from './EmployeeForm';
+import EmployeeFormContainer from '../containers/EmployeeFormContainer';
 
 class EmployeeCreate extends Component {
 	onButtonPress = () => {
@@ -13,7 +11,7 @@ class EmployeeCreate extends Component {
 	render() {
 		return (
 			<Card>
-				<EmployeeForm {...this.props} />
+				<EmployeeFormContainer {...this.props} />
 				<CardSection>
 					<Button onPress={this.onButtonPress}>Create</Button>
 				</CardSection>
@@ -22,11 +20,4 @@ class EmployeeCreate extends Component {
 	}
 }
 
-const mapStateToProp = ({ employeeForm }) => {
-	const { name, phone, shift } = employeeForm;
-	return { name, phone, shift };
-};
-
-export default connect(mapStateToProp, { employeeUpdate, employeeCreate })(
-	EmployeeCreate
-);
+export default EmployeeCreate;

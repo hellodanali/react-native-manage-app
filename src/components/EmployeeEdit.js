@@ -1,9 +1,7 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import Communications from 'react-native-communications';
-import { connect } from 'react-redux';
 import { Card, CardSection, Button, Confirm } from './common';
-import { employeeUpdate, employeeSave } from '../actions';
 import EmployeeForm from './EmployeeForm';
 
 class EmployeeEdit extends Component {
@@ -32,6 +30,16 @@ class EmployeeEdit extends Component {
 		Communications.text(phone, `Your upcoming shift is on ${shift}`);
 	};
 
+	onDecline = () => {
+		this.setState({ showModal: !this.state.showModal });
+	};
+
+	onAccept = () => {
+		const { uid } = this.props.employee;
+		console.log(uid);
+		this.props.employeeDelete({ uid });
+	};
+
 	render() {
 		return (
 			<Card>
@@ -50,7 +58,11 @@ class EmployeeEdit extends Component {
 					</Button>
 				</CardSection>
 
-				<Confirm visible={this.state.showModal}>
+				<Confirm
+					visible={this.state.showModal}
+					onAccept={this.onAccept}
+					onDecline={this.onDecline}
+				>
 					Are you sure you want to delete this?
 				</Confirm>
 			</Card>
@@ -58,11 +70,4 @@ class EmployeeEdit extends Component {
 	}
 }
 
-const mapStateToProp = state => {
-	const { name, phone, shift } = state.employeeForm;
-	return { name, phone, shift };
-};
-
-export default connect(mapStateToProp, { employeeUpdate, employeeSave })(
-	EmployeeEdit
-);
+export default EmployeeEdit;
